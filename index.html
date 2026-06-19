@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en-au">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage - TipToe Soles</title>
+
+    <link rel="stylesheet" href="CSS/body.css">
+    <link rel="stylesheet" href="CSS/gridlayout.css">
+    <link rel="stylesheet" href="CSS/headerlayout.css">
+    <link rel="stylesheet" href="CSS/maincontentlayout.css">
+    <link rel="stylesheet" href="CSS/indexlayout.css"> 
+    <link rel="stylesheet" href="CSS/footerlayout.css">
+    <link rel="stylesheet" href="CSS/viewports.css">
+    <style>
+                /* --- Dark Content Architecture --- */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            align-content: start;
+        }
+
+        .card {
+            background-color: #302F2F;
+            border-top: 1px solid #2d2d2d;
+            padding-top: 20px;
+        }
+
+        .card h2 {
+            font-size: 18px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .card p {
+            font-size: 14px;
+            margin-bottom: 20px;
+            color: #a0a0a0;
+            font-weight: 300;
+        }
+        
+    </style>     
+</head>
+<body>
+
+<div class="site-container">
+
+    <header class="site-header">
+        <div class="logo-area">
+            <a href="index.html">
+                <img src="images/TipToe_Soles_Logo_colour.png" alt="TipToe Soles">
+            </a>
+        </div>
+        <div class="header-actions">
+            <form class="search-box" action="contact.html" method="get">
+                <input type="text" name="contact" placeholder="Search..." required>
+                <button type="submit" class="btn">Go</button>
+            </form>
+            <a href="login.html" class="btn-primary">Account Login</a>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        
+        <nav class="sidebar">
+            <h2>Navigation</h2>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="returnexchange.html">Return & Exchange Policies</a></li>
+                <li><a href="deliverypolicy.html">Delivery Policies</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+
+        <aside class="catalogue-box">
+            <h2>Latest Arrivals</h2>
+            
+            <div class="product-grid">
+                
+                <div class="card">
+                    <div class="product-image-placeholder">
+                        <img src="images/Work and Walk Chesnut.jpg" alt="Hiking Work and Walk Boots">
+                    </div>
+                    <div>
+                        <span class="card-tag">Chestnut</span>
+                        <h3>Work and Walk</h3>
+                        <p>Hiking-inspired with everyday style, meet the Work and Walk boot. With leather upper, these lace-up ankle boots are built for long days on your feet. The exterior features our No-Worry leather to protect from scuff, stain and water. Plus, the inside is pretty comfy as well with a soft footbed that hugs your heel for extra support.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="price">&dollar;85 AUD</span>
+                        <button class="view-btn" onclick="openProductModal('mens')">Inspect</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="product-image-placeholder">
+                        <img src="images/Heavenly Black.jpg" alt="leather uppers for easy cleaning">
+                    </div>
+                    <div>
+                        <span class="card-tag">Black</span>
+                        <h3>Heavenly</h3>
+                        <p>Perfect for those on their feet all day who require leather uppers for easy cleaning. Featuring a super flexible and grippy outsole for durability and a soft padded footbed for extra comfort.</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="price">&dollar;90 AUD</span>
+                        <button class="view-btn" onclick="openProductModal('womens')">Inspect</button>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+
+        <main class="content-area">
+            
+            <section class="content-card">
+                <h2>TipToe Soles</h2>
+                <p>Stripping away the noise to deliver unparalleled foundational design. Pure materials meets precise construction.</p>
+                
+                <div class="nested-location">
+                    <h4>Our Location</h4>
+                    <div class="map-wrapper">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d954.8239667878606!2d150.82652627726748!3d-34.05053514636968!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12ee91ef4c6c0b%3A0xb8ccd7c26c45671b!2sHungry%20Jack's%20Burgers%20Leumeah!5e0!3m2!1sen!2sau!4v1773629059839!5m2!1sen!2sau" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <p>Visit our retail space for tailored fittings and private viewings.</p>
+                </div>
+                
+                <div class="login-prompt">
+                    <h3>Account Access</h3>
+                    <p>Log in to manage your orders, access priority collection releases, or modify profile preferences.</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="productModalOverlay" onclick="closeProductModal(event)">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeProductModal(null, true)">&times;</button>
+            <span class="modal-header-tag" id="popupTag">Edition</span>
+            <h3 class="modal-title" id="popupTitle">Product Name</h3>
+            
+            <h4 class="modal-label">Shoe Sizes</h4>
+            <ul class="spec-list">
+                <li><strong>Sizes</strong> <span id="popupSize">Size here</span></li>
+            </ul>
+            
+            <h4 class="modal-label">Materials & Details Manifest</h4>
+            <ul class="spec-list">
+                <li><strong>Product Code</strong> <span id="popupCode">TTS-000</span></li>
+                <li><strong>Sole Material</strong> <span id="popupSole">Material</span></li>
+                <li><strong>Sole Material</strong> <span id="popupSock">Material</span></li>                
+                <li><strong>Lining Material</strong> <span id="popupLining">Material</span></li>
+                <li><strong>Upper Material</strong> <span id="popupUpper">Material</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <h2>TipToe Soles</h2>
+            <p>&#169; 2026 TipToe Soles. Architectural Footwear Engineering. All concepts reserved.</p>
+        </div>
+
+        <div class="footer-icons">
+            <a href="https://instagram.com" class="footer-icon-link" target="_blank" rel="noopener" aria-label="Instagram Profile">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+            </a>
+
+            <a href="https://facebook.com" class="footer-icon-link" target="_blank" rel="noopener" aria-label="Facebook Page">
+                <svg viewBox="0 0 24 24">
+                    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+                </svg>
+            </a>
+
+            <a href="https://twitter.com" class="footer-icon-link" target="_blank" rel="noopener" aria-label="Twitter Feed">
+                <svg viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+            </a>
+        </div>
+    </footer>
+
+</div>
+
+<script>
+    const productData = {
+        'mens': {
+            tag: "Chestnut",
+            title: "Work and Walk",
+            size: "US 6,7, 8, 9, 10, 11",
+            code: "30144",
+            sole: "Rubber",
+            sock: "Pigskin",
+            lining: "Mesh",
+            upper: "Leather"
+        },
+        'womens': {
+            tag: "Black",
+            title: "Heavenly",
+            size: "US 6,7, 8, 9, 10, 11",
+            code: "21960",
+            sole: "Rubber",
+            sock: "Pigskin",
+            lining: "Unlined",
+            upper: "Leather"
+        }
+    };
+
+    const overlay = document.getElementById('productModalOverlay');
+
+    function openProductModal(productId) {
+        const data = productData[productId];
+        if (!data) return;
+
+        document.getElementById('popupTag').innerText = data.tag;
+        document.getElementById('popupTitle').innerText = data.title;
+        document.getElementById('popupSize').innerText = data.size;
+        document.getElementById('popupCode').innerText = data.code;
+        document.getElementById('popupSole').innerText = data.sole;
+        document.getElementById('popupSock').innerText = data.sock;
+        document.getElementById('popupLining').innerText = data.lining;
+        document.getElementById('popupUpper').innerText = data.upper;
+
+        overlay.classList.add('is-active');
+        document.body.style.overflow = 'hidden'; 
+    }
+
+    function closeProductModal(event, force = false) {
+        if (force || event.target === overlay) {
+            overlay.classList.remove('is-active');
+            document.body.style.overflow = ''; 
+        }
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.classList.contains('is-active')) {
+            closeProductModal(null, true);
+        }
+    });
+</script>
+
+</body>
+</html>

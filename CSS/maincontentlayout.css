@@ -1,0 +1,11 @@
+        /* --- Main Layout Split --- */
+        .main-layout {
+            grid-area: main;
+            display: grid;
+            grid-template-columns: 200px 240px 1fr; /* Navigation | Catalogue | Content Workspace */
+            width: 100%;
+            max-width: 1400px; 
+            margin: 0 auto;
+            padding: 40px 5%;
+            gap: 40px;
+        }

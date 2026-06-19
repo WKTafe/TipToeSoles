@@ -1,0 +1,86 @@
+        /* --- Minimalist Dark Header --- */
+        .site-header {
+            grid-area: header;
+            background-image: url(../images/rupixen-shoes-4345692_1920.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-bottom: 1px solid #2d2d2d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo-area img {
+            max-height: 50px;
+            width: auto;
+            display: block;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            display: flex;
+            border: 1px solid #404040;
+            background-color: #1a1a1a;
+        }
+
+        .search-box input {
+            padding: 8px 12px;
+            border: none;
+            outline: none;
+            font-size: 13px;
+            background: transparent;
+            color: #e0e0e0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .search-box button {
+            background-color: #e0e0e0;
+            color: #121212;
+            border: 1px solid #e0e0e0;
+            border-left: 1px solid #404040;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .search-box button:hover {
+            background-color: transparent;
+            color: #e0e0e0;
+            border-color: #e0e0e0;
+        }
+
+        .btn-primary {
+            background-color: #e0e0e0;
+            color: #121212;
+            border: 1px solid #e0e0e0;
+            padding: 9px 20px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: background 0.2s ease, color 0.2s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: #e0e0e0;
+            border-color: #e0e0e0;
+        }

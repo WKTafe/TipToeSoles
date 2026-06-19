@@ -1,0 +1,80 @@
+/* --- Minimal Dark Footer Architecture --- */
+.site-footer {
+    grid-area: footer;
+    background-color: #634533;
+    color: #ffffff;
+    border-top: 1px solid #e0e0e0;
+    padding: 30px 5%;
+    
+    /* Convert layout to distribute elements to opposite sides */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footer-content {
+    text-align: left;
+}
+
+.footer-content h2 {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+}
+
+.footer-content p {
+    color: #ffffff;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.6;
+}
+
+/* --- Right Side Icon Container --- */
+.footer-icons {
+    display: flex;
+    gap: 18px; /* Control structural gap between icons */
+    align-items: center;
+}
+
+.footer-icon-link {
+    color: #ffffff;
+    opacity: 0.6;
+    display: inline-block;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.footer-icon-link:hover {
+    opacity: 1;
+    transform: translateY(-2px); /* Subtle elevate hint on hover */
+}
+
+/* Forces inline SVGs to match the clean minimalist geometry */
+.footer-icon-link svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    display: block;
+}
+
+/* --- Responsive Adaptations --- */
+@media (max-width: 680px) {
+    .site-footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 35px 5%;
+    }
+    
+    .footer-content {
+        text-align: center;
+    }
+    
+    .footer-icons {
+        justify-content: center;
+        margin-top: 5px;
+    }
+}

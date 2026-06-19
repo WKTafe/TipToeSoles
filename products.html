@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en-au">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - TipToe Soles</title>
+
+    <link rel="stylesheet" href="CSS/body.css">
+    <link rel="stylesheet" href="CSS/gridlayout.css">
+    <link rel="stylesheet" href="CSS/headerlayout.css">
+    <link rel="stylesheet" href="CSS/gennavlayout.css">
+    <link rel="stylesheet" href="CSS/maincontentlayout.css">
+    <link rel="stylesheet" href="CSS/footerlayout.css">
+    <link rel="stylesheet" href="CSS/viewports.css">
+    <style>
+
+        /* --- Content Workspace Architecture --- */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        .gender-section {
+            border-top: 1px solid #ffffff;
+            padding-top: 20px;
+        }
+
+        .gender-section h1 {
+            font-size: 24px;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #ffffff;
+            margin-bottom: 30px;
+        }
+
+        /* Grid for Showcase Cards inside Workspace */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* Product Card Layout with Flexible Dynamic Spaces */
+        .card {
+            background-color: #1a1a1a;
+            border: 1px solid #2d2d2d;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transition: border-color 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: #e0e0e0;
+        }
+
+        .product-image-placeholder {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            background-color: #262525;
+            border: 1px solid #2d2d2d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0.7;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .card:hover .product-image-placeholder img {
+            transform: scale(1.03);
+        }
+
+        .image-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #555555;
+            letter-spacing: 0.1em;
+        }
+
+        .card-tag {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #888888;
+            margin-bottom: 5px;
+        }
+
+        .card h2 {
+            font-size: 16px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .card p {
+            font-size: 13px;
+            margin-bottom: 10px;
+            color: #a0a0a0;
+            font-weight: 300;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px dashed #404040;
+            padding-top: 15px;
+            margin-top: auto;
+        }
+
+        .price {
+            font-size: 14px;
+            color: #ffffff;
+            font-weight: 400;
+        }
+
+        .view-btn {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #e0e0e0;
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .view-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Minimalist Popup (Modal) Window Architecture --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(18, 18, 18, 0.85); /* Dark desaturated dimming backdrop */
+            backdrop-filter: blur(4px);               /* Premium architectural softening edge */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.is-active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-container {
+            background-color: #1a1a1a;
+            border: 1px solid #e0e0e0;
+            width: 90%;
+            max-width: 550px;
+            padding: 35px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.is-active .modal-container {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #888888;
+            font-size: 28px;
+            line-height: 1;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: #ffffff;
+        }
+
+        .modal-header-tag {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #888888;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #2d2d2d;
+            padding-bottom: 10px;
+        }
+
+        .modal-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #ffffff;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .modal-text {
+            font-size: 13px;
+            color: #a0a0a0;
+            font-weight: 300;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        /* Structuring technical details inside the popup box */
+        .spec-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .spec-list li {
+            font-size: 12px;
+            color: #a0a0a0;
+            padding: 8px 0;
+            border-bottom: 1px dashed #2d2d2d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .spec-list li strong {
+            color: #888888;
+            font-weight: 400;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+        }
+
+        .spec-list li span {
+            color: #ffffff;
+            text-align: right;
+            padding-left: 15px;
+        }
+
+        /* --- Interactive Toggle Images --- */
+        .toggle-img {
+            cursor: pointer;
+            /* Adds a very quick fade effect when the image source changes */
+            transition: opacity 0.2s ease, transform 0.3s ease; 
+        }
+
+        /* Optional: Add a subtle hover hint to show it's clickable */
+        .product-image-placeholder:hover .toggle-img {
+            opacity: 0.85; 
+        }
+
+        /* --- PRESERVED DESKTOP SIDE-BY-SIDE GRID ALLOCATION --- */
+        @media (min-width: 1025px) {
+            .main-layout {
+                display: grid !important;
+                grid-template-columns: 200px 1fr !important;
+                gap: 40px;
+            }
+            .content-area {
+                min-width: 0 !important;
+                width: 100% !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="site-container">
+
+    <header class="site-header">
+        <div class="logo-area">
+            <a href="index.html">
+                <img src="images/TipToe_Soles_Logo_colour.png" alt="TipToe Soles">
+            </a>
+        </div>
+        <div class="header-actions">
+            <form class="search-box" action="contact.html" method="get">
+                <input type="text" name="contact" placeholder="Search..." required>
+                <button type="submit" class="btn">Go</button>
+            </form>
+            <a href="login.html" class="btn-primary">Account Login</a>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        
+        <nav class="sidebar">
+            <h2>Navigation</h2>
+            <ul class="sidebar-menu">
+                <li><a href="index.html">Home</a></li>                
+                <li><a href="products.html" class="active">Products</a></li>
+                <li><a href="returnexchange.html">Return & Exchange Policies</a></li>
+                <li><a href="deliverypolicy.html">Delivery Policies</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+
+        <main class="content-area">
+            
+            <!-- MEN'S FOOTWEAR SECTION -->
+            <section class="gender-section" id="mens-collection">
+                <h1>Men's Shoes</h1>
+                <div class="product-grid">
+                    
+                    <div class="card" id="card-mens-essentials">
+                        <div class="product-image-placeholder">
+                            <img src="images/Gary Tan.jpg" alt="Great comfort sneakers" 
+                            data-default="images/Gary Tan.jpg"
+                            data-alt="images/Gary Black.jpg"
+                            alt="Gary"
+                            class="toggle-img"
+                            onclick="toggleProductImage(this)">
+                        </div>
+                        <div>
+                            <span class="card-tag">Tan &sol; Midnight</span>
+                            <h2>Gary</h2>
+                            <p>Look good, feel great in these comfort sneakers you won't want to take off. </p>
+                            <p>&ndash; Soft leather uppers</p>
+                            <p>&ndash; Breathable mesh lining</p>
+                            <p>&ndash; Removable footbed with soft mesh sock lining</p>
+                            <p>&ndash; Contoured footbed with additional heel padding</p>
+                            <p>&ndash; Orthotic friendly</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">&dollar;79.00</span>
+                            <button class="view-btn" onclick="openProductModal('mens-essentials')">Inspect</button>
+                        </div>
+                    </div>
+
+                    <div class="card" id="card-mens-performance">
+                        <div class="product-image-placeholder">
+                            <img src="images/Work and Walk Chesnut.jpg" alt="Great comfort sneakers">
+                        </div>
+                        <div>
+                            <span class="card-tag">Chesnut</span>
+                            <h2>Work and Walk</h2>
+                            <p>Hiking-inspired with everyday style, meet the Work and Walk boot. With leather upper, these lace-up ankle boots are built for long days on your feet. The exterior features our No-Worry leather to protect from scuff, stain and water. Plus, the inside is pretty comfy as well with a soft footbed that hugs your heel for extra support.</p>
+                            <p>&ndash; Upper is scuff, stain & water-resistant</p>
+                            <p>&ndash; Breathable & soft foam backed mesh lining</p>
+                            <p>&ndash; Padded collar is super soft on the heel</p>
+                            <p>&ndash; Pull-tab for easy fitting</p>
+                            <p>&ndash; Metal eyelet detail</p>
+                            <p>&ndash; Footbed hugs your heel for extra support</p>
+                            <p>&ndash; Removable insole to fit your own orthotics</p>
+                            <p>&ndash; Dual Fit. Remove the insole for a wider fit</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">&dollar;85.00</span>
+                            <button class="view-btn" onclick="openProductModal('mens-performance')">Inspect</button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- WOMEN'S FOOTWEAR SECTION -->
+            <section class="gender-section" id="womens-collection">
+                <h1>Women's Shoes</h1>
+                <div class="product-grid">
+                    
+                    <div class="card" id="card-womens-essentials">
+                        <div class="product-image-placeholder">
+                            <img src="images/Sally Tan.jpg" alt="Lightweight Flat" 
+                            data-default="images/Sally Tan.jpg"
+                            data-alt="images/Sally Black.jpg"
+                            alt="Sally"
+                            class="toggle-img"
+                            onclick="toggleProductImage(this)">
+                        </div>
+                        <div>
+                            <span class="card-tag">Tan &sol; Black</span>
+                            <h2>Sally</h2>
+                            <p>Sally our new favourite lightweight flat is giving our serious comfort goals, with it's soft semi line uppers and padded arch support.</p>
+                            <p>&ndash; Soft smooth leather uppers</p>
+                            <p>&ndash; Semi lined uppers for soft unstructed feel</p>
+                            <p>&ndash; Super comfortable insole & padded arch support</p>
+                            <p>&ndash; Super lightweight outsole helps to absorb shock</p>
+                            <p>&ndash; Flexible & grippy outsole</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">&dollar;75.00</span>
+                            <button class="view-btn" onclick="openProductModal('womens-essentials')">Inspect</button>
+                        </div>
+                    </div>
+
+                    <div class="card" id="card-womens-performance">
+                        <div class="product-image-placeholder">
+                            <img src="images/Heavenly Black.jpg" alt="Flexible and grippy outsole">
+                        </div>
+                        <div>
+                            <span class="card-tag">Black</span>
+                            <h2>Heavenly</h2>
+                            <p>Perfect for those on their feet all day who require leather uppers for easy cleaning. Featuring a super flexible and grippy outsole for durability and a soft padded footbed for extra comfort.</p>
+                            <p>&ndash; Soft leather uppers and lightly padded collar</p>
+                            <p>&ndash; Plush footbed for added comfort</p>
+                            <p>&ndash; Recycle heel grip</p>
+                            <p>&ndash; Flexible and grippy outsole with 10% recycled material</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">&dollar;90.00</span>
+                            <button class="view-btn" onclick="openProductModal('womens-performance')">Inspect</button>
+                        </div>
+                    </div>
+
+                    <div class="card" id="card-womens-urban">
+                        <div class="product-image-placeholder">
+                            <img src="images/Clancy Blue.jpg" alt="Easy fit memory foam">
+                        </div>
+                        <div>
+                            <span class="card-tag">Blue</span>
+                            <h2>Clancy</h2>
+                            <p>The Clancy sandal allows air circulation due to the holes on each side. These sandals provide support to tired feet. The arch support design eliminates any strain or imbalance.  Stretchable mesh fabric allows an easy fit Memory foam insoles.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">&dollar;59.00</span>
+                            <button class="view-btn" onclick="openProductModal('womens-urban')">Inspect</button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- GLOBAL MODAL BACKDROP AND WINDOW CONTAINER -->
+    <div class="modal-overlay" id="productModalOverlay" onclick="closeProductModal(event)">
+        <div class="modal-container" onclick="event.stopPropagation()">
+            <!-- FIXED: Correct close method arguments to bypass JS execution errors -->
+            <button class="modal-close" onclick="closeProductModal(null, true)">&times;</button>
+            <span class="modal-header-tag" id="popupTag">Edition</span>
+            <h3 class="modal-title" id="popupTitle">Product Name</h3>
+            
+            <h4 class="modal-label">Shoe Sizes</h4>
+            <ul class="spec-list">
+                <li><strong>Sizes</strong> <span id="popupSize">Size here</span></li>
+            </ul>
+
+            <h4 class="modal-label">Materials & Details</h4>
+            <ul class="spec-list">
+                <li><strong>Product Code</strong> <span id="popupCode">TTS-000</span></li>
+                <li><strong>Sole Material</strong> <span id="popupSole">Material</span></li>
+                <li><strong>Sock Material</strong> <span id="popupSock">Material</span></li>
+                <li><strong>Lining Material</strong> <span id="popupLining">Material</span></li>
+                <li><strong>Upper Material</strong> <span id="popupUpper">Material</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <h2>TipToe Soles</h2>
+            <p>&#169; 2026 TipToe Soles. Architectural Footwear Engineering. All concepts reserved.</p>
+        </div>
+
+        <div class="footer-icons">
+            <a href="https://instagram.com" class="footer-icon-link" target="_blank" rel="noopener" aria-label="Instagram Profile">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+            </a>
+
+            <a href="https://facebook.com" class="footer-icon-link" target="_blank" rel="noopener" aria-label="Facebook Page">
+                <svg viewBox="0 0 24 24">
+                    <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+                </svg>
+            </a>
+
+            <a href="https://twitter.com" class="footer-icon-link" target="_blank" rel="noopener" aria-label="Twitter Feed">
+                <svg viewBox="0 0 24 24">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+            </a>
+        </div>
+    </footer>
+
+</div>
+
+<!-- DATA MATRIX AND LIGHTWEIGHT ENGINE SCRIPT -->
+<script>
+    // System data structure matching your exact fields
+    const productData = {
+        'mens-essentials': {
+            tag: "Tan / Midnight",
+            title: "Gary",
+            size: "US 6,7, 8, 9, 10, 11",
+            code: "30213",
+            sole: "Rubber",
+            sock: "Synthetic",
+            lining: "Eco friendly",
+            upper: "Leather"
+        },
+        'mens-performance': {
+            tag: "Chestnut",
+            title: "Work and Walk",
+            size: "US 6,7, 8, 9, 10, 11",
+            code: "30144",
+            sole: "Rubber",
+            sock: "Pigskin",
+            lining: "Mesh",
+            upper: "Leather"
+        },
+        'womens-essentials': {
+            tag: "Tan / Black",
+            title: "Sally",
+            size: "US 6,7 8, 9, 10, 11",
+            code: "301818",
+            sole: "Phylon Rubber",
+            sock: "Pigskin",
+            lining: "Leather/synthetic",
+            upper: "Leather"
+        },
+        'womens-performance': {
+            tag: "Black",
+            title: "Heavenly",
+            size: "US 6,7, 8, 9, 10, 11",
+            code: "21960",
+            sole: "Rubber",
+            sock: "Pigskin",
+            lining: "Unlined",
+            upper: "Leather"
+        },
+        'womens-urban': {
+            tag: "Blue",
+            title: "Clancy",
+            size: "US 6,7, 8, 9, 10, 11",
+            code: "30182",
+            sole: "Rubber",
+            sock: "Pigskin",
+            lining: "Unlined",
+            upper: "Leather"
+        }
+    };
+
+    const overlay = document.getElementById('productModalOverlay');
+
+    // Controller actions to feed and manifest data arrays safely
+    function openProductModal(productId) {
+        const data = productData[productId];
+        if (!data) return;
+
+        document.getElementById('popupTag').innerText = data.tag;
+        document.getElementById('popupTitle').innerText = data.title;
+        document.getElementById('popupSize').innerText = data.size;
+        document.getElementById('popupCode').innerText = data.code;
+        document.getElementById('popupSole').innerText = data.sole;
+        document.getElementById('popupSock').innerText = data.sock;
+        document.getElementById('popupLining').innerText = data.lining;
+        document.getElementById('popupUpper').innerText = data.upper;
+
+        overlay.classList.add('is-active');
+        document.body.style.overflow = 'hidden'; // Prevents background body scrolling
+    }
+
+    function closeProductModal(event, force = false) {
+        if (force || event.target === overlay) {
+            overlay.classList.remove('is-active');
+            document.body.style.overflow = ''; // Restores baseline scrolling
+        }
+    }
+
+    // Capture Escape key to close the popup naturally
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.classList.contains('is-active')) {
+            closeProductModal(null, true);
+        }
+    });
+
+    // --- Interactive Image Toggle Engine ---
+    function toggleProductImage(imgElement) {
+        // Retrieve the stored file paths
+        const defaultSrc = imgElement.getAttribute('data-default');
+        const altSrc = imgElement.getAttribute('data-alt');
+        
+        // Check what is currently rendering (using getAttribute avoids absolute URL path issues)
+        const currentSrc = imgElement.getAttribute('src');
+
+        // Briefly drop opacity for a smooth visual transition
+        imgElement.style.opacity = 0.7;
+
+        setTimeout(() => {
+            // Swap the source file
+            if (currentSrc === defaultSrc) {
+                imgElement.setAttribute('src', altSrc);
+            } else {
+                imgElement.setAttribute('src', defaultSrc);
+            }
+            
+            // Restore opacity
+            imgElement.style.opacity = 0.7;
+        }, 150); // 150ms matches the CSS transition speed
+    }
+</script>
+
+</body>
+</html>
